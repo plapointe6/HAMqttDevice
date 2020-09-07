@@ -1,0 +1,24 @@
+#######################################
+# Syntax Coloring Map For HomeAssistantDevice
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+HAMqttDevice	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+addConfigVar    KEYWORD2
+addAttribute    KEYWORD2
+clearAttributes KEYWORD2
+
+getConfigPayload        KEYWORD2
+getAttributesPayload    KEYWORD2
+
+getTopic            KEYWORD2
+getConfigTopic      KEYWORD2
+getAttributesTopic  KEYWORD2
