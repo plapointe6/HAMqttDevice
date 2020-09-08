@@ -64,7 +64,5 @@ Config payload : {"~":"ha/binary_sensor/my_binary_sensor","name":"My Binary Sens
 ## Full blown exemples
 
 I use this library in pair with ESPMQTTClient since more than a year now and I am in a point where everything is stable and functionnal.
-I am preparing a repository where I will put all my iot devices that I developped, including the code, the 3D printed cases and the milled PCBs.
-This section will be updated with the link when it will be available.
+You can see this library in action with some of my iot devices from this repo : https://github.com/plapointe6/CustomHADevicesCollection
 
-(On/OFF light, RGBW led strips, Dimmable light with a rotary encoder, door sensor, smart door handle)
