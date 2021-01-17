@@ -1,12 +1,10 @@
 #include "HAMqttDevice.h"
 
-
 HAMqttDevice::HAMqttDevice(
-    const String& name, 
-    const DeviceType type, 
-    const String& haMQTTPrefix) :
-    _name(name), 
-    _type(type)
+    const String &name,
+    const DeviceType type,
+    const String &haMQTTPrefix) : _name(name),
+                                  _type(type)
 {
     // Id = name to lower case replacing spaces by underscore (ex: name="Kitchen Light" -> id="kitchen_light")
     _identifier = name;
@@ -19,85 +17,70 @@ HAMqttDevice::HAMqttDevice(
     // Preconfigure mandatory config vars that we already know
     addConfigVar("~", _topic);
     addConfigVar("name", _name);
+    addConfigVar("unique_id", _identifier);
 
     // When the command topic is mandatory, enable it.
-    switch(type)
+    switch (type)
     {
-        case DeviceType::ALARM_CONTROL_PANEL:
-        case DeviceType::FAN:
-        case DeviceType::LIGHT:
-        case DeviceType::LOCK:
-        case DeviceType::SWITCH:
-            enableCommandTopic();
+    case DeviceType::ALARM_CONTROL_PANEL:
+    case DeviceType::FAN:
+    case DeviceType::LIGHT:
+    case DeviceType::LOCK:
+    case DeviceType::SWITCH:
+        enableCommandTopic();
+    default:
+        break;
     }
 
     // When the state topic is mandatory, enable it.
-    switch(type)
+    switch (type)
     {
-        case DeviceType::ALARM_CONTROL_PANEL:
-        case DeviceType::BINARY_SENSOR:
-        case DeviceType::FAN:
-        case DeviceType::LIGHT:
-        case DeviceType::LOCK:
-        case DeviceType::SENSOR:
-        case DeviceType::SWITCH:
-            enableStateTopic();
+    case DeviceType::ALARM_CONTROL_PANEL:
+    case DeviceType::BINARY_SENSOR:
+    case DeviceType::FAN:
+    case DeviceType::LIGHT:
+    case DeviceType::LOCK:
+    case DeviceType::SENSOR:
+    case DeviceType::SWITCH:
+        enableStateTopic();
+    default:
+        break;
     }
 }
 
-HAMqttDevice::~HAMqttDevice(){}
+HAMqttDevice::~HAMqttDevice() {}
 
-HAMqttDevice& HAMqttDevice::enableCommandTopic()
+HAMqttDevice &HAMqttDevice::enableCommandTopic()
 {
-    static bool firstCall = true;
-
-    if(firstCall)
-    {
-        addConfigVar("cmd_t", "~/cmd");
-        firstCall = false;
-    }
+    addConfigVar("cmd_t", "~/cmd");
     return *this;
 }
 
-HAMqttDevice& HAMqttDevice::enableStateTopic()
+HAMqttDevice &HAMqttDevice::enableStateTopic()
 {
-    static bool firstCall = true;
-
-    if(firstCall)
-    {
-        addConfigVar("stat_t", "~/state");
-        firstCall = false;
-    }
+    addConfigVar("stat_t", "~/state");
     return *this;
 }
 
-HAMqttDevice& HAMqttDevice::enableAttributesTopic()
+HAMqttDevice &HAMqttDevice::enableAttributesTopic()
 {
-    static bool firstCall = true;
-
-    if(firstCall)
-    {
-        addConfigVar("json_attr_t", "~/attr");
-        firstCall = false;
-    }
-
+    addConfigVar("json_attr_t", "~/attr");
     return *this;
 }
 
-
-HAMqttDevice& HAMqttDevice::addConfigVar(const String& name, const String& value)
+HAMqttDevice &HAMqttDevice::addConfigVar(const String &name, const String &value)
 {
-    _configVars.push_back({ name, value });
+    _configVars.push_back({name, value});
     return *this;
 }
 
-HAMqttDevice& HAMqttDevice::addAttribute(const String& name, const String& value)
+HAMqttDevice &HAMqttDevice::addAttribute(const String &name, const String &value)
 {
-    _attributes.push_back({ name, value });
+    _attributes.push_back({name, value});
     return *this;
 }
 
-HAMqttDevice& HAMqttDevice::clearAttributes()
+HAMqttDevice &HAMqttDevice::clearAttributes()
 {
     _attributes.clear();
     return *this;
@@ -107,7 +90,7 @@ const String HAMqttDevice::getConfigPayload() const
 {
     String configPayload = "{";
 
-    for (uint8_t i = 0 ; i < _configVars.size() ; i++)
+    for (uint8_t i = 0; i < _configVars.size(); i++)
     {
         configPayload.concat('"');
         configPayload.concat(_configVars[i].key);
@@ -125,7 +108,7 @@ const String HAMqttDevice::getConfigPayload() const
 
         configPayload.concat(',');
     }
-    configPayload.setCharAt(configPayload.length()-1, '}');
+    configPayload.setCharAt(configPayload.length() - 1, '}');
 
     return configPayload;
 }
@@ -134,7 +117,7 @@ const String HAMqttDevice::getAttributesPayload() const
 {
     String attrPayload = "{";
 
-    for (uint8_t i = 0 ; i < _attributes.size() ; i++)
+    for (uint8_t i = 0; i < _attributes.size(); i++)
     {
         attrPayload.concat('"');
         attrPayload.concat(_attributes[i].key);
@@ -142,7 +125,7 @@ const String HAMqttDevice::getAttributesPayload() const
         attrPayload.concat(_attributes[i].value);
         attrPayload.concat("\",");
     }
-    attrPayload.setCharAt(attrPayload.length()-1, '}');
+    attrPayload.setCharAt(attrPayload.length() - 1, '}');
 
     return attrPayload;
 }
@@ -151,18 +134,29 @@ String HAMqttDevice::deviceTypeToStr(DeviceType type)
 {
     switch (type)
     {
-        case DeviceType::ALARM_CONTROL_PANEL: return "alarm_control_panel";
-        case DeviceType::BINARY_SENSOR: return "binary_sensor";
-        case DeviceType::CAMERA: return "camera";
-        case DeviceType::COVER: return "cover";
-        case DeviceType::FAN: return "fan";
-        case DeviceType::LIGHT: return "light";
-        case DeviceType::LOCK: return "lock";
-        case DeviceType::SENSOR: return "sensor";
-        case DeviceType::SWITCH: return "switch";
-        case DeviceType::CLIMATE: return "climate";
-        case DeviceType::VACUUM: return "vacuum";
-        default: return "[Unknown DeviceType]";
+    case DeviceType::ALARM_CONTROL_PANEL:
+        return "alarm_control_panel";
+    case DeviceType::BINARY_SENSOR:
+        return "binary_sensor";
+    case DeviceType::CAMERA:
+        return "camera";
+    case DeviceType::COVER:
+        return "cover";
+    case DeviceType::FAN:
+        return "fan";
+    case DeviceType::LIGHT:
+        return "light";
+    case DeviceType::LOCK:
+        return "lock";
+    case DeviceType::SENSOR:
+        return "sensor";
+    case DeviceType::SWITCH:
+        return "switch";
+    case DeviceType::CLIMATE:
+        return "climate";
+    case DeviceType::VACUUM:
+        return "vacuum";
+    default:
+        return "[Unknown DeviceType]";
     }
 }
-
