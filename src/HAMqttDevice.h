@@ -6,7 +6,20 @@
 class HAMqttDevice
 {
 public:
-    enum DeviceType { ALARM_CONTROL_PANEL, BINARY_SENSOR, CAMERA, COVER, FAN, LIGHT, LOCK, SENSOR, SWITCH, CLIMATE, VACUUM };
+    enum DeviceType
+    {
+        ALARM_CONTROL_PANEL,
+        BINARY_SENSOR,
+        CAMERA,
+        COVER,
+        FAN,
+        LIGHT,
+        LOCK,
+        SENSOR,
+        SWITCH,
+        CLIMATE,
+        VACUUM
+    };
 
 private:
     // Device proprieties
@@ -17,14 +30,16 @@ private:
     String _topic;
 
     // Config variables handling
-    struct ConfigVar {
+    struct ConfigVar
+    {
         String key;
         String value;
     };
     std::vector<ConfigVar> _configVars;
 
     // Device attributes handling
-    struct Attribute {
+    struct Attribute
+    {
         String key;
         String value;
     };
@@ -32,20 +47,19 @@ private:
 
 public:
     HAMqttDevice(
-        const String& name, 
-        const DeviceType type, 
-        const String& haMQTTPrefix = "ha"
-    );
+        const String &name,
+        const DeviceType type,
+        const String &haMQTTPrefix = "homeassistant");
 
     ~HAMqttDevice();
 
-    HAMqttDevice& enableCommandTopic();
-    HAMqttDevice& enableStateTopic();
-    HAMqttDevice& enableAttributesTopic();
+    HAMqttDevice &enableCommandTopic();
+    HAMqttDevice &enableStateTopic();
+    HAMqttDevice &enableAttributesTopic();
 
-    HAMqttDevice& addConfigVar(const String& key, const String& value);
-    HAMqttDevice& addAttribute(const String& key, const String& value);
-    HAMqttDevice& clearAttributes();
+    HAMqttDevice &addConfigVar(const String &key, const String &value);
+    HAMqttDevice &addAttribute(const String &key, const String &value);
+    HAMqttDevice &clearAttributes();
 
     const String getConfigPayload() const;
     const String getAttributesPayload() const;
