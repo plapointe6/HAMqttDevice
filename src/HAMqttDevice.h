@@ -49,7 +49,7 @@ public:
     HAMqttDevice(
         const String &name,
         const DeviceType type,
-        const String &haMQTTPrefix = "homeassistant");
+        const String &haMQTTPrefix = "ha");
 
     ~HAMqttDevice();
 
