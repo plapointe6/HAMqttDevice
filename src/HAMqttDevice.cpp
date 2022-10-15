@@ -27,6 +27,7 @@ HAMqttDevice::HAMqttDevice(
     case DeviceType::LIGHT:
     case DeviceType::LOCK:
     case DeviceType::SWITCH:
+    case DeviceType::BUTTON:
         enableCommandTopic();
     default:
         break;
@@ -156,6 +157,8 @@ String HAMqttDevice::deviceTypeToStr(DeviceType type)
         return "climate";
     case DeviceType::VACUUM:
         return "vacuum";
+    case DeviceType::BUTTON:
+        return "button";
     default:
         return "[Unknown DeviceType]";
     }

@@ -18,7 +18,8 @@ public:
         SENSOR,
         SWITCH,
         CLIMATE,
-        VACUUM
+        VACUUM,
+        BUTTON
     };
 
 private:
