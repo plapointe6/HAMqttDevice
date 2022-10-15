@@ -2,6 +2,7 @@
 #define HA_MQTT_DEVICE_H
 
 #include "Arduino.h"
+#include <vector>
 
 class HAMqttDevice
 {
