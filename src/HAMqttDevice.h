@@ -20,6 +20,7 @@ public:
         SWITCH,
         CLIMATE,
         VACUUM,
+        NUMBER,
         BUTTON
     };
 
