@@ -26,6 +26,7 @@ HAMqttDevice::HAMqttDevice(
     case DeviceType::FAN:
     case DeviceType::LIGHT:
     case DeviceType::LOCK:
+    case DeviceType::COVER:
     case DeviceType::NUMBER:
     case DeviceType::SWITCH:
     case DeviceType::BUTTON:
@@ -42,6 +43,7 @@ HAMqttDevice::HAMqttDevice(
     case DeviceType::FAN:
     case DeviceType::LIGHT:
     case DeviceType::LOCK:
+    case DeviceType::COVER:
     case DeviceType::NUMBER:
     case DeviceType::SENSOR:
     case DeviceType::SWITCH:
