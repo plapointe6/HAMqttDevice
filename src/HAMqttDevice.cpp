@@ -101,7 +101,7 @@ const String HAMqttDevice::getConfigPayload() const
         configPayload.concat(_configVars[i].key);
         configPayload.concat("\":");
 
-        bool valueIsDictionnary = _configVars[i].value[0] == '{';
+        bool valueIsDictionnary = _configVars[i].value[0] == '{' || _configVars[i].value[0] == '[';
 
         if (!valueIsDictionnary)
             configPayload.concat('"');
